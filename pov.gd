@@ -56,44 +56,31 @@ func handle_camera_movement(delta):
 	# Apply the calculated movement (relative to the current rotation and direction)
 	translate(movement)
 
-
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		# Get the camera's global position as the ray's origin
-		var ray_origin = global_transform.origin
-		
-		# The camera looks along its negative Z-axis in local space, so we use -transform.basis.z for the forward direction
-		var ray_dir = -global_transform.basis.z.normalized()
-		
-		# Define the ray length (how far the ray will cast)
-		var ray_length = 100.0
-		
-		# Get the space state for raycasting
-		var space_state = get_world_3d().direct_space_state
-		
-		# Create a ray query parameter object (Godot 4)
-		var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_origin + ray_dir * ray_length)
-		
 		# Perform the raycast
-		var result = space_state.intersect_ray(query)
-
-		# Check if the raycast hit something
-		if result:
-			var clicked_voxel = result.collider
-			if clicked_voxel:
-				clicked_voxel.queue_free()  # Remove the clicked voxel
-
-
-func old_input(event):
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		var ray_origin = project_ray_origin(get_viewport().get_mouse_position())
-		var ray_dir = project_ray_normal(get_viewport().get_mouse_position())
+		var from = project_ray_origin(event.position)
+		var to = from + project_ray_normal(event.position) * 1000  # Extend the ray far into the distance
+		
+		# Prepare the raycast query using a dictionary
+		var query = PhysicsRayQueryParameters3D.create(from, to)
+		
+		# Get the physics space state and perform the raycast
 		var space_state = get_world_3d().direct_space_state
-		var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_origin + ray_dir * 100)
 		var result = space_state.intersect_ray(query)
-		#var result = space_state.intersect_ray(ray_origin, ray_origin + ray_dir * 100)
-
+		
+		# Check for collisions
 		if result:
-			var clicked_voxel = result["collider"]
-			if clicked_voxel:
-				clicked_voxel.queue_free()  # remove the clicked voxel
+			var collider = result.collider
+			if collider is MeshInstance3D:
+				print("Collision detected with a MeshInstance3D!")
+				print("Collision point: ", result.position)
+				print("Collider: ", collider)
+		else:
+			print("No collision detected")
+		
+		## Check if the raycast hit something
+		#if result:
+			#var clicked_voxel = result.collider
+			#if clicked_voxel:
+				#clicked_voxel.queue_free()  # Remove the clicked voxel

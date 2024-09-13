@@ -1,5 +1,6 @@
 # v0.01
 O.. fix botched movement
+O.. collision raycast
 O.. delete voxel
 O.. add voxel
 O.. highlight voxel
