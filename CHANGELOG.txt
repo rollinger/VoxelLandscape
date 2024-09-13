@@ -1,0 +1,9 @@
+# v0.00
+OK Display Mesh
+OK Basic Camera Movement
+OK mouse view
+OK FPS counter
+0K Reticule
+OK Make grid generation work 
+OK git push
+OK copilot integration
