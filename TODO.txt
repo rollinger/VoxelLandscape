@@ -1,0 +1,28 @@
+# v0.00
+OK Display Mesh
+OK Basic Camera Movement
+OK mouse view
+OK FPS counter
+0K Reticule
+OK Make grid generation work 
+O.. git push
+O.. copilot integration
+
+
+# v0.01
+O.. fix botched movement
+O.. delete voxel
+O.. add voxel
+O.. highlight voxel
+
+# v0.02
+O Voxel types: Soil,Rock,Space (Textures)
+O save/load terrain
+
+# v0.03
+O increase voxel terrain to 100,100,10
+O physics, gravity for voxels and player
+
+# v0.04
+
+# v0.05
